@@ -1,0 +1,23 @@
+{
+  "name": "admin-generator-poc",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/reach__router": "^1.2.2",
+    "@types/react": "^16.7.17",
+    "@types/react-dom": "^16.0.11",
+    "parcel-bundler": "^1.10.3",
+    "typescript": "^3.2.2"
+  },
+  "scripts": {
+    "build": "parcel ./src/index.html"
+  },
+  "dependencies": {
+    "@reach/router": "^1.2.1",
+    "@types/react-table": "^6.7.20",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-table": "^6.8.6"
+  }
+}

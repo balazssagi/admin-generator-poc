@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    color: #405057;
+    background-color: rgb(252, 252, 252);
+}
+
+.ReactTable {
+    background: white;
+}
+
+.ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
+    background: rgba(3, 168, 244, 0.151);
+}
+
+.ReactTable .rt-thead .rt-tr {
+    text-align: left;
+}
+
+a {
+    text-decoration: none;
+    color: #03a9f4;
+}
+
+.admin {
+    display: flex;
+}
+
+.main {
+    flex: 1;
+    padding-top: 1em;
+    padding-inline-end: 1em;
+}
+
+.aside {
+    flex: 0 0 200px;
+    background-color: #03a9f4;
+    padding: 1em;
+    height: 100vh;
+    margin-inline-end: 1em;
+    box-shadow: -10px 0 15px 10px rgba(0, 58, 84, 0.25);
+}
+
+.aside a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    display: inline-block;
+    margin-bottom: 1em;
+}
+
+ul {
+    padding-inline-start: 0;
+    list-style: none;
+}
