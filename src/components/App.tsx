@@ -1,33 +1,35 @@
 import * as React from 'react'
-import { Admin, IResource } from '../lib/Admin'
+import {
+    Admin,
+    FieldTypes,
+    createField,
+    createResource,
+} from '../lib/Admin'
 import './style.css'
 
-const users: IResource = {
+const { longText, string, reference } = FieldTypes
+
+const users = createResource({
     name: 'User',
     url: '/user',
     descriptiveField: 'name',
-    fields: [
-        { name: 'id', type: 'text', filterable: false },
-        { name: 'name', type: 'text', filterable: true },
-    ],
-}
+    fields: [createField(string, 'name'), createField(string, 'id')],
+})
 
-const posts: IResource = {
+const posts = createResource({
     name: 'Post',
     url: '/post',
     descriptiveField: 'title',
     fields: [
-        { name: 'id', type: 'text', filterable: false },
-        {
-            name: 'userId',
-            type: 'reference',
-            references: users,
+        createField(string, 'id', { filterable: false }),
+        createField(reference, 'userId', {
             filterable: true,
-        },
-        { name: 'title', type: 'text', filterable: true },
-        { name: 'body', type: 'longText' },
+            references: users,
+        }),
+        createField(string, 'title'),
+        createField(longText, 'body'),
     ],
-}
+})
 
 const resources = [users, posts]
 
