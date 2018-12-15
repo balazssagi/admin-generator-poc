@@ -4,14 +4,14 @@ import { EditResource, ListResource } from './Resouce'
 
 export interface IField<Type extends FieldTypes> {
     name: string
-    type: Type,
+    type: Type
     options: IFieldOptions
 }
 
 interface IFieldOptions {
     showInList?: boolean
     filterable?: boolean
-    references?: IResource
+    references?: IResource | string
 }
 
 interface IResourceOptions {
@@ -21,16 +21,18 @@ interface IResourceOptions {
     fields: IField<FieldTypes>[]
 }
 
-export function createResource(options: IResourceOptions) : IResource {
+export function createResource(options: IResourceOptions): IResource {
     const resource: IResource = {
         name: options.name,
         url: options.url,
         descriptiveField: options.descriptiveField,
-        fields: options.fields
+        fields: options.fields,
     }
 
-    if (!resource.fields.some((field => field.name === resource.descriptiveField))) {
-        throw new Error ('Please')
+    if (
+        !resource.fields.some(field => field.name === resource.descriptiveField)
+    ) {
+        throw new Error('Please')
     }
 
     return resource
@@ -51,7 +53,7 @@ export function createField<Type extends FieldTypes>(
             showInList: true,
             filterable: true,
             ...options,
-        }
+        },
     }
     return field
 }
@@ -76,6 +78,7 @@ export enum FieldTypes {
 const List: React.SFC<{ path: string; resource: IResource }> = ({
     resource,
 }) => <ListResource resource={resource} />
+
 const Edit: React.SFC<{ path: string; resource: IResource }> = ({
     resource,
 }) => <EditResource resource={resource} />
@@ -84,9 +87,48 @@ const ResourceList: React.SFC<{ path: string }> = ({ children }) => (
     <div>{children}</div>
 )
 
-class Admin extends React.Component<Props, null> {
+const normaliseResouces = (resources: IResource[]): IResource[] => {
+    return resources.map(resource => {
+        return {
+            ...resource,
+            fields: resource.fields.map(field => {
+                if (field.type === FieldTypes.reference) {
+                    return {
+                        ...field,
+                        options: {
+                            ...field.options,
+                            references:
+                                typeof field.options.references === 'string'
+                                    ? field.options.references
+                                    : field.options.references.name,
+                        },
+                    }
+                } else {
+                    return field
+                }
+            }),
+        }
+    })
+}
+
+class Admin extends React.Component<Props, { resources: IResource[] }> {
+    state: { resources: IResource[] } = {
+        resources: [],
+    }
+
+    componentDidMount() {
+        this.setState(
+            {
+                resources: normaliseResouces(this.props.resources),
+            },
+            () => {
+                console.log(this.state)
+            }
+        )
+    }
+
     render() {
-        const { resources } = this.props
+        const { resources } = this.state
 
         return (
             <div className="admin">

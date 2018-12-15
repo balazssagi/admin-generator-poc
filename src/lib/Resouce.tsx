@@ -87,7 +87,7 @@ class ListResource extends React.Component<Props, null> {
             .map(field => ({
                 Header:
                     field.type === FieldTypes.reference
-                        ? field.options.references.name
+                        ? field.options.references
                         : field.name,
                 accessor: field.name,
                 filterable: field.options.filterable,
